@@ -1,3 +1,5 @@
+# Comparison class takes in two files and prints out what is in the first file
+# but not in the second file
 class Comparison
   def initialize(file1, file2)
     @file1 = file1
