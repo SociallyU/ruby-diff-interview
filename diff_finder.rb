@@ -81,6 +81,22 @@ class DiffFinder
         return diff_arr.join("\n")
     end
 
+    ## O(N) because each txt file is iterated through only once. By far the most
+    ## efficient solution
+    ##
+    ## This solution takes a different approach compares to the above solutions.
+    ## Here, a memo hash is declared. Each line of thte second txt file is 
+    ## entered as a key in that hash. Then, for each line in the first txt
+    ## file not found in that hash, a line is pushed into the diff_arr.
+    def self.find_diffs_with_hash(txt1, txt2, new_file_name)
+        memo = {}
+        diff_arr = []
+        File.foreach(txt2) {|line| memo[line] = true}
+        File.foreach(txt1) {|line| memo[line] ? nil : diff_arr.push(line)}
+        File.write(new_file_name, diff_arr.join(""))
+    end
+
+
 end
 
 DiffFinder.find_unsorted_diffs("file1.txt", "file2.txt", "new_file.txt")
